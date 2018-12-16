@@ -1,0 +1,2288 @@
+  [1m[35m (3.5ms)[0m  [1m[35m
+	DROP
+	DATABASE IF EXISTS `app_test`[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	CREATE
+	DATABASE `app_test` DEFAULT CHARACTER
+SET
+	`utf8`[0m
+  [1m[35m (17.0ms)[0m  [1m[35m
+	CREATE
+	TABLE
+		`board_tag_relations` (
+			`id` INT AUTO_INCREMENT PRIMARY KEY
+			,`board_id` INT
+			,`tag_id` INT
+			,`created_at` datetime NOT NULL
+			,`updated_at` datetime NOT NULL
+			,INDEX `index_board_tag_relations_on_board_id`
+				USING btree (`board_id`)
+			,INDEX `index_board_tag_relations_on_tag_id`
+				USING btree (`tag_id`)
+		) ENGINE = InnoDB DEFAULT CHARSET = utf8[0m
+  [1m[35m (12.6ms)[0m  [1m[35m
+	CREATE
+	TABLE
+		`boards` (
+			`id` INT AUTO_INCREMENT PRIMARY KEY
+			,`name` VARCHAR (255)
+			,`title` VARCHAR (255)
+			,`body` text
+			,`created_at` datetime NOT NULL
+			,`updated_at` datetime NOT NULL
+		) ENGINE = InnoDB DEFAULT CHARSET = utf8[0m
+  [1m[35m (14.3ms)[0m  [1m[35m
+	CREATE
+	TABLE
+		`comments` (
+			`id` INT AUTO_INCREMENT PRIMARY KEY
+			,`board_id` INT
+			,`name` VARCHAR (255) NOT NULL
+			,`comment` text NOT NULL
+			,`created_at` datetime NOT NULL
+			,`updated_at` datetime NOT NULL
+			,INDEX `index_comments_on_board_id`
+				USING btree (`board_id`)
+		) ENGINE = InnoDB DEFAULT CHARSET = utf8[0m
+  [1m[35m (13.1ms)[0m  [1m[35m
+	CREATE
+	TABLE
+		`tags` (
+			`id` INT AUTO_INCREMENT PRIMARY KEY
+			,`name` VARCHAR (255) NOT NULL
+			,`created_at` datetime NOT NULL
+			,`updated_at` datetime NOT NULL
+		) ENGINE = InnoDB DEFAULT CHARSET = utf8[0m
+  [1m[35m (13.7ms)[0m  [1m[35m
+	CREATE
+	TABLE
+		`users` (
+			`id` INT AUTO_INCREMENT PRIMARY KEY
+			,`name` VARCHAR (255) NOT NULL
+			,`password_digest` VARCHAR (255) NOT NULL
+			,`created_at` datetime NOT NULL
+			,`updated_at` datetime NOT NULL
+			,UNIQUE INDEX `index_users_on_name`
+				USING btree (`name`)
+		) ENGINE = InnoDB DEFAULT CHARSET = utf8[0m
+  [1m[35m (41.2ms)[0m  [1m[35m
+	ALTER TABLE
+	`board_tag_relations` ADD CONSTRAINT `fk_rails_1eb07359f9` FOREIGN KEY (`board_id`) REFERENCES `boards` (`id`)
+[0m
+  [1m[35m (31.9ms)[0m  [1m[35m
+	ALTER TABLE
+	`board_tag_relations` ADD CONSTRAINT `fk_rails_88d29ca25f` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`)
+[0m
+  [1m[35m (35.6ms)[0m  [1m[35m
+	ALTER TABLE
+	`comments` ADD CONSTRAINT `fk_rails_9510ce0f70` FOREIGN KEY (`board_id`) REFERENCES `boards` (`id`)
+[0m
+  [1m[35m (11.1ms)[0m  [1m[35m
+	CREATE
+	TABLE
+		`schema_migrations` (
+			`version` VARCHAR (255) PRIMARY KEY
+		) ENGINE = InnoDB[0m
+  [1m[35m (0.7ms)[0m  [1m[34m
+	SELECT
+		version
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (2.2ms)[0m  [1m[32m
+	INSERT
+	INTO
+		`schema_migrations` (version)
+	VALUES (20181212024534)[0m
+  [1m[35m (6.3ms)[0m  [1m[32m
+	INSERT
+	INTO
+		`schema_migrations` (version)
+	VALUES (20180324120941)
+	,(20180315233935)
+	,(20180324120737)
+	,(20180217122153)
+;
+[0m
+  [1m[35m (12.1ms)[0m  [1m[35m
+	CREATE
+	TABLE
+		`ar_internal_metadata` (
+			`key` VARCHAR (255) PRIMARY KEY
+			,`value` VARCHAR (255)
+			,`created_at` datetime NOT NULL
+			,`updated_at` datetime NOT NULL
+		) ENGINE = InnoDB[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34m
+	SELECT
+		`ar_internal_metadata`. *
+	FROM
+		`ar_internal_metadata`
+	WHERE
+		`ar_internal_metadata`.`key` = 'environment' LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32m
+	INSERT
+	INTO
+		`ar_internal_metadata` (
+			`key`
+			,`value`
+			,`created_at`
+			,`updated_at`
+		)
+	VALUES (
+		'environment'
+		,'test'
+		,'2018-12-12 12:00:39'
+		,'2018-12-12 12:00:39'
+	)[0m
+  [1m[35m (3.3ms)[0m  [1m[35m
+	COMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34m
+	SELECT
+		`ar_internal_metadata`. *
+	FROM
+		`ar_internal_metadata`
+	WHERE
+		`ar_internal_metadata`.`key` = 'environment' LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	COMMIT[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.5ms)[0m  [1m[34m
+	SELECT
+		`ar_internal_metadata`.`value`
+	FROM
+		`ar_internal_metadata`
+	WHERE
+		`ar_internal_metadata`.`key` = 'environment'[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.5ms)[0m  [1m[34m
+	SELECT
+		`ar_internal_metadata`.`value`
+	FROM
+		`ar_internal_metadata`
+	WHERE
+		`ar_internal_metadata`.`key` = 'environment'[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (1.4ms)[0m  [1m[34m
+	SELECT
+		`ar_internal_metadata`.`value`
+	FROM
+		`ar_internal_metadata`
+	WHERE
+		`ar_internal_metadata`.`key` = 'environment'[0m
+  [1m[35m (41.6ms)[0m  [1m[35m
+	DROP
+	DATABASE IF EXISTS `app_test`[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	CREATE
+	DATABASE `app_test` DEFAULT CHARACTER
+SET
+	`utf8`[0m
+  [1m[35m (17.8ms)[0m  [1m[35m
+	CREATE
+	TABLE
+		`board_tag_relations` (
+			`id` INT AUTO_INCREMENT PRIMARY KEY
+			,`board_id` INT
+			,`tag_id` INT
+			,`created_at` datetime NOT NULL
+			,`updated_at` datetime NOT NULL
+			,INDEX `index_board_tag_relations_on_board_id`
+				USING btree (`board_id`)
+			,INDEX `index_board_tag_relations_on_tag_id`
+				USING btree (`tag_id`)
+		) ENGINE = InnoDB DEFAULT CHARSET = utf8[0m
+  [1m[35m (13.3ms)[0m  [1m[35m
+	CREATE
+	TABLE
+		`boards` (
+			`id` INT AUTO_INCREMENT PRIMARY KEY
+			,`name` VARCHAR (255)
+			,`title` VARCHAR (255)
+			,`body` text
+			,`created_at` datetime NOT NULL
+			,`updated_at` datetime NOT NULL
+		) ENGINE = InnoDB DEFAULT CHARSET = utf8[0m
+  [1m[35m (14.5ms)[0m  [1m[35m
+	CREATE
+	TABLE
+		`comments` (
+			`id` INT AUTO_INCREMENT PRIMARY KEY
+			,`board_id` INT
+			,`name` VARCHAR (255) NOT NULL
+			,`comment` text NOT NULL
+			,`created_at` datetime NOT NULL
+			,`updated_at` datetime NOT NULL
+			,INDEX `index_comments_on_board_id`
+				USING btree (`board_id`)
+		) ENGINE = InnoDB DEFAULT CHARSET = utf8[0m
+  [1m[35m (11.2ms)[0m  [1m[35m
+	CREATE
+	TABLE
+		`tags` (
+			`id` INT AUTO_INCREMENT PRIMARY KEY
+			,`name` VARCHAR (255) NOT NULL
+			,`created_at` datetime NOT NULL
+			,`updated_at` datetime NOT NULL
+		) ENGINE = InnoDB DEFAULT CHARSET = utf8[0m
+  [1m[35m (12.8ms)[0m  [1m[35m
+	CREATE
+	TABLE
+		`users` (
+			`id` INT AUTO_INCREMENT PRIMARY KEY
+			,`name` VARCHAR (255) NOT NULL
+			,`password_digest` VARCHAR (255) NOT NULL
+			,`created_at` datetime NOT NULL
+			,`updated_at` datetime NOT NULL
+			,`birthday` DATE
+			,UNIQUE INDEX `index_users_on_name`
+				USING btree (`name`)
+		) ENGINE = InnoDB DEFAULT CHARSET = utf8[0m
+  [1m[35m (27.3ms)[0m  [1m[35m
+	ALTER TABLE
+	`board_tag_relations` ADD CONSTRAINT `fk_rails_1eb07359f9` FOREIGN KEY (`board_id`) REFERENCES `boards` (`id`)
+[0m
+  [1m[35m (28.2ms)[0m  [1m[35m
+	ALTER TABLE
+	`board_tag_relations` ADD CONSTRAINT `fk_rails_88d29ca25f` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`)
+[0m
+  [1m[35m (22.2ms)[0m  [1m[35m
+	ALTER TABLE
+	`comments` ADD CONSTRAINT `fk_rails_9510ce0f70` FOREIGN KEY (`board_id`) REFERENCES `boards` (`id`)
+[0m
+  [1m[35m (9.5ms)[0m  [1m[35m
+	CREATE
+	TABLE
+		`schema_migrations` (
+			`version` VARCHAR (255) PRIMARY KEY
+		) ENGINE = InnoDB[0m
+  [1m[35m (0.6ms)[0m  [1m[34m
+	SELECT
+		version
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (1.8ms)[0m  [1m[32m
+	INSERT
+	INTO
+		`schema_migrations` (version)
+	VALUES (20181212120307)[0m
+  [1m[35m (1.2ms)[0m  [1m[32m
+	INSERT
+	INTO
+		`schema_migrations` (version)
+	VALUES (20180324120941)
+	,(20180315233935)
+	,(20180324120737)
+	,(20180217122153)
+	,(20181212024534)
+;
+[0m
+  [1m[35m (12.6ms)[0m  [1m[35m
+	CREATE
+	TABLE
+		`ar_internal_metadata` (
+			`key` VARCHAR (255) PRIMARY KEY
+			,`value` VARCHAR (255)
+			,`created_at` datetime NOT NULL
+			,`updated_at` datetime NOT NULL
+		) ENGINE = InnoDB[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34m
+	SELECT
+		`ar_internal_metadata`. *
+	FROM
+		`ar_internal_metadata`
+	WHERE
+		`ar_internal_metadata`.`key` = 'environment' LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32m
+	INSERT
+	INTO
+		`ar_internal_metadata` (
+			`key`
+			,`value`
+			,`created_at`
+			,`updated_at`
+		)
+	VALUES (
+		'environment'
+		,'test'
+		,'2018-12-12 12:09:11'
+		,'2018-12-12 12:09:11'
+	)[0m
+  [1m[35m (2.3ms)[0m  [1m[35m
+	COMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34m
+	SELECT
+		`ar_internal_metadata`. *
+	FROM
+		`ar_internal_metadata`
+	WHERE
+		`ar_internal_metadata`.`key` = 'environment' LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	COMMIT[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.7ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (1.0ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (4.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.5ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.7ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.9ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by UsersController#new as HTML
+  Rendering users/new.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered users/new.html.erb within layouts/application (0.7ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 238ms (Views: 86.8ms | ActiveRecord: 2.6ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by UsersController#new as HTML
+  Rendering users/new.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered users/new.html.erb within layouts/application (0.7ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 4ms (Views: 3.3ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by UsersController#new as HTML
+  Rendering users/new.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered users/new.html.erb within layouts/application (0.5ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 3ms (Views: 2.3ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by UsersController#new as HTML
+  Rendering users/new.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered users/new.html.erb within layouts/application (0.6ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 116ms (Views: 39.9ms | ActiveRecord: 2.1ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by UsersController#new as HTML
+  Rendering users/new.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered users/new.html.erb within layouts/application (1.0ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 4ms (Views: 3.2ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by UsersController#new as HTML
+  Rendering users/new.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered users/new.html.erb within layouts/application (1.8ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 7ms (Views: 5.9ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.9ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.5ms)[0m  [1m[34m
+	SELECT
+		COUNT( * )
+	FROM
+		`users`[0m
+Processing by UsersController#create as HTML
+  Parameters: 
+{
+    "user"[0;37m => [0m{
+                         "name"[0;37m => [0m[0;33m"user"[0m,
+                     "password"[0;37m => [0m[0;33m"[FILTERED]"[0m,
+        "password_confirmation"[0;37m => [0m[0;33m"[FILTERED]"[0m
+    }
+}
+  [1m[35m (0.4ms)[0m  [1m[35m
+	SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (2.5ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'user' LIMIT 1[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32m
+	INSERT
+	INTO
+		`users` (
+			`name`
+			,`password_digest`
+			,`created_at`
+			,`updated_at`
+		)
+	VALUES (
+		'user'
+		,'$2a$04$Pzw93SKtfcp/oPdVZX/7feEPbKb1tMqqj4.di7/i530y1NNWhTXe2'
+		,'2018-12-12 13:13:59'
+		,'2018-12-12 13:13:59'
+	)[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	RELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/mypage
+Completed 302 Found in 94ms (ActiveRecord: 4.2ms)
+  [1m[35m (0.5ms)[0m  [1m[34m
+	SELECT
+		COUNT( * )
+	FROM
+		`users`[0m
+  [1m[35m (3.0ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by UsersController#create as HTML
+  Parameters: 
+{
+    "user"[0;37m => [0m{
+                         "name"[0;37m => [0m[0;33m"user"[0m,
+                     "password"[0;37m => [0m[0;33m"[FILTERED]"[0m,
+        "password_confirmation"[0;37m => [0m[0;33m"[FILTERED]"[0m
+    }
+}
+  [1m[35m (0.4ms)[0m  [1m[35m
+	SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'user' LIMIT 1[0m
+  [1m[35mSQL (1.1ms)[0m  [1m[32m
+	INSERT
+	INTO
+		`users` (
+			`name`
+			,`password_digest`
+			,`created_at`
+			,`updated_at`
+		)
+	VALUES (
+		'user'
+		,'$2a$04$DqE.J3wo/jNIYl1F4bgWteqzg54Ew2GEP7IQfVk1O6vVj3R8wAw6e'
+		,'2018-12-12 13:13:59'
+		,'2018-12-12 13:13:59'
+	)[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	RELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/mypage
+Completed 302 Found in 28ms (ActiveRecord: 2.4ms)
+  [1m[35m (2.9ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by UsersController#create as HTML
+  Parameters: 
+{
+    "user"[0;37m => [0m{
+                         "name"[0;37m => [0m[0;33m"ユーザー１"[0m,
+                     "password"[0;37m => [0m[0;33m"[FILTERED]"[0m,
+        "password_confirmation"[0;37m => [0m[0;33m"[FILTERED]"[0m
+    }
+}
+  [1m[35m (0.3ms)[0m  [1m[35m
+	SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'ユーザー１' LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK TO SAVEPOINT active_record_1[0m
+Redirected to http://localhost
+Completed 302 Found in 482ms (ActiveRecord: 3.0ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by UsersController#create as HTML
+  Parameters: 
+{
+    "user"[0;37m => [0m{
+                         "name"[0;37m => [0m[0;33m"ユーザー１"[0m,
+                     "password"[0;37m => [0m[0;33m"[FILTERED]"[0m,
+        "password_confirmation"[0;37m => [0m[0;33m"[FILTERED]"[0m
+    }
+}
+  [1m[35m (0.7ms)[0m  [1m[35m
+	SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'ユーザー１' LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK TO SAVEPOINT active_record_1[0m
+Redirected to http://localhost
+Completed 302 Found in 21ms (ActiveRecord: 1.6ms)
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by UsersController#create as HTML
+  Parameters: 
+{
+    "user"[0;37m => [0m{
+                         "name"[0;37m => [0m[0;33m"ユーザー１"[0m,
+                     "password"[0;37m => [0m[0;33m"[FILTERED]"[0m,
+        "password_confirmation"[0;37m => [0m[0;33m"[FILTERED]"[0m
+    }
+}
+  [1m[35m (0.3ms)[0m  [1m[35m
+	SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'ユーザー１' LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK TO SAVEPOINT active_record_1[0m
+Redirected to http://localhost
+Completed 302 Found in 20ms (ActiveRecord: 1.1ms)
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by UsersController#create as HTML
+  Parameters: 
+{
+    "user"[0;37m => [0m{
+                         "name"[0;37m => [0m[0;33m"ユーザー１"[0m,
+                     "password"[0;37m => [0m[0;33m"[FILTERED]"[0m,
+        "password_confirmation"[0;37m => [0m[0;33m"[FILTERED]"[0m
+    }
+}
+  [1m[35m (0.3ms)[0m  [1m[35m
+	SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'ユーザー１' LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK TO SAVEPOINT active_record_1[0m
+Redirected to http://localhost
+Completed 302 Found in 438ms (ActiveRecord: 2.8ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by UsersController#create as HTML
+  Parameters: 
+{
+    "user"[0;37m => [0m{
+                         "name"[0;37m => [0m[0;33m"ユーザー１"[0m,
+                     "password"[0;37m => [0m[0;33m"[FILTERED]"[0m,
+        "password_confirmation"[0;37m => [0m[0;33m"[FILTERED]"[0m
+    }
+}
+  [1m[35m (0.3ms)[0m  [1m[35m
+	SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'ユーザー１' LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK TO SAVEPOINT active_record_1[0m
+Redirected to http://localhost
+Completed 302 Found in 19ms (ActiveRecord: 1.1ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by UsersController#create as HTML
+  Parameters: 
+{
+    "user"[0;37m => [0m{
+                         "name"[0;37m => [0m[0;33m"ユーザー１"[0m,
+                     "password"[0;37m => [0m[0;33m"[FILTERED]"[0m,
+        "password_confirmation"[0;37m => [0m[0;33m"[FILTERED]"[0m
+    }
+}
+  [1m[35m (0.3ms)[0m  [1m[35m
+	SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (0.8ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'ユーザー１' LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK TO SAVEPOINT active_record_1[0m
+Redirected to http://localhost
+Completed 302 Found in 19ms (ActiveRecord: 1.4ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by UsersController#create as HTML
+  Parameters: 
+{
+    "user"[0;37m => [0m{
+                         "name"[0;37m => [0m[0;33m"ユーザー１"[0m,
+                     "password"[0;37m => [0m[0;33m"[FILTERED]"[0m,
+        "password_confirmation"[0;37m => [0m[0;33m"[FILTERED]"[0m
+    }
+}
+  [1m[35m (0.5ms)[0m  [1m[35m
+	SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'ユーザー１' LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK TO SAVEPOINT active_record_1[0m
+Redirected to http://localhost
+Completed 302 Found in 441ms (ActiveRecord: 3.2ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by UsersController#create as HTML
+  Parameters: 
+{
+    "user"[0;37m => [0m{
+                         "name"[0;37m => [0m[0;33m"ユーザー１"[0m,
+                     "password"[0;37m => [0m[0;33m"[FILTERED]"[0m,
+        "password_confirmation"[0;37m => [0m[0;33m"[FILTERED]"[0m
+    }
+}
+  [1m[35m (0.3ms)[0m  [1m[35m
+	SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (1.0ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'ユーザー１' LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK TO SAVEPOINT active_record_1[0m
+Redirected to http://localhost
+Completed 302 Found in 20ms (ActiveRecord: 1.7ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by UsersController#create as HTML
+  Parameters: 
+{
+    "user"[0;37m => [0m{
+                         "name"[0;37m => [0m[0;33m"ユーザー１"[0m,
+                     "password"[0;37m => [0m[0;33m"[FILTERED]"[0m,
+        "password_confirmation"[0;37m => [0m[0;33m"[FILTERED]"[0m
+    }
+}
+  [1m[35m (0.3ms)[0m  [1m[35m
+	SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (1.0ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'ユーザー１' LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK TO SAVEPOINT active_record_1[0m
+Redirected to http://localhost
+Completed 302 Found in 19ms (ActiveRecord: 1.7ms)
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (4.0ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by UsersController#create as HTML
+  Parameters: 
+{
+    "user"[0;37m => [0m{
+                         "name"[0;37m => [0m[0;33m"ユーザー１"[0m,
+                     "password"[0;37m => [0m[0;33m"[FILTERED]"[0m,
+        "password_confirmation"[0;37m => [0m[0;33m"[FILTERED]"[0m
+    }
+}
+  [1m[35m (0.4ms)[0m  [1m[35m
+	SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (2.1ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'ユーザー１' LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK TO SAVEPOINT active_record_1[0m
+Redirected to http://localhost
+Completed 302 Found in 409ms (ActiveRecord: 5.7ms)
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by UsersController#create as HTML
+  Parameters: 
+{
+    "user"[0;37m => [0m{
+                         "name"[0;37m => [0m[0;33m"ユーザー１"[0m,
+                     "password"[0;37m => [0m[0;33m"[FILTERED]"[0m,
+        "password_confirmation"[0;37m => [0m[0;33m"[FILTERED]"[0m
+    }
+}
+  [1m[35m (0.8ms)[0m  [1m[35m
+	SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'ユーザー１' LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK TO SAVEPOINT active_record_1[0m
+Redirected to http://localhost
+Completed 302 Found in 18ms (ActiveRecord: 1.9ms)
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by UsersController#create as HTML
+  Parameters: 
+{
+    "user"[0;37m => [0m{
+                         "name"[0;37m => [0m[0;33m"ユーザー１"[0m,
+                     "password"[0;37m => [0m[0;33m"[FILTERED]"[0m,
+        "password_confirmation"[0;37m => [0m[0;33m"[FILTERED]"[0m
+    }
+}
+  [1m[35m (0.4ms)[0m  [1m[35m
+	SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (0.9ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'ユーザー１' LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK TO SAVEPOINT active_record_1[0m
+Redirected to http://localhost
+Completed 302 Found in 18ms (ActiveRecord: 1.7ms)
+  [1m[35m (0.6ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by UsersController#new as HTML
+  Rendering users/new.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered users/new.html.erb within layouts/application (0.5ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 74ms (Views: 23.1ms | ActiveRecord: 2.3ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by UsersController#new as HTML
+  Rendering users/new.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered users/new.html.erb within layouts/application (0.5ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 3ms (Views: 2.1ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by UsersController#new as HTML
+  Rendering users/new.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered users/new.html.erb within layouts/application (0.5ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 3ms (Views: 2.0ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.7ms)[0m  [1m[34m
+	SELECT
+		COUNT( * )
+	FROM
+		`users`[0m
+Processing by UsersController#create as HTML
+  Parameters: 
+{
+    "user"[0;37m => [0m{
+                         "name"[0;37m => [0m[0;33m"user"[0m,
+                     "password"[0;37m => [0m[0;33m"[FILTERED]"[0m,
+        "password_confirmation"[0;37m => [0m[0;33m"[FILTERED]"[0m
+    }
+}
+  [1m[35m (0.5ms)[0m  [1m[35m
+	SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (0.7ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'user' LIMIT 1[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32m
+	INSERT
+	INTO
+		`users` (
+			`name`
+			,`password_digest`
+			,`created_at`
+			,`updated_at`
+		)
+	VALUES (
+		'user'
+		,'$2a$04$d6CwWhU8KBG0tG0OwmVWS.ft8O1GqBgWaKqkaCHJEek7k.qT0hSr6'
+		,'2018-12-13 14:17:48'
+		,'2018-12-13 14:17:48'
+	)[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	RELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/mypage
+Completed 302 Found in 46ms (ActiveRecord: 2.1ms)
+  [1m[35m (0.5ms)[0m  [1m[34m
+	SELECT
+		COUNT( * )
+	FROM
+		`users`[0m
+  [1m[35m (4.9ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by UsersController#create as HTML
+  Parameters: 
+{
+    "user"[0;37m => [0m{
+                         "name"[0;37m => [0m[0;33m"user"[0m,
+                     "password"[0;37m => [0m[0;33m"[FILTERED]"[0m,
+        "password_confirmation"[0;37m => [0m[0;33m"[FILTERED]"[0m
+    }
+}
+  [1m[35m (0.4ms)[0m  [1m[35m
+	SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'user' LIMIT 1[0m
+  [1m[35mSQL (1.1ms)[0m  [1m[32m
+	INSERT
+	INTO
+		`users` (
+			`name`
+			,`password_digest`
+			,`created_at`
+			,`updated_at`
+		)
+	VALUES (
+		'user'
+		,'$2a$04$HVM1cPo39s8pV6p.2dRzHOAOfiSixYJCQ29HUhTiIqt3cgyt.xIZa'
+		,'2018-12-13 14:17:48'
+		,'2018-12-13 14:17:48'
+	)[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	RELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/mypage
+Completed 302 Found in 31ms (ActiveRecord: 2.4ms)
+  [1m[35m (1.8ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by UsersController#create as HTML
+  Parameters: 
+{
+    "user"[0;37m => [0m{
+                         "name"[0;37m => [0m[0;33m"ユーザー１"[0m,
+                     "password"[0;37m => [0m[0;33m"[FILTERED]"[0m,
+        "password_confirmation"[0;37m => [0m[0;33m"[FILTERED]"[0m
+    }
+}
+  [1m[35m (0.4ms)[0m  [1m[35m
+	SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (0.7ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'ユーザー１' LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK TO SAVEPOINT active_record_1[0m
+Redirected to http://localhost
+Completed 302 Found in 314ms (ActiveRecord: 1.5ms)
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by UsersController#create as HTML
+  Parameters: 
+{
+    "user"[0;37m => [0m{
+                         "name"[0;37m => [0m[0;33m"ユーザー１"[0m,
+                     "password"[0;37m => [0m[0;33m"[FILTERED]"[0m,
+        "password_confirmation"[0;37m => [0m[0;33m"[FILTERED]"[0m
+    }
+}
+  [1m[35m (0.4ms)[0m  [1m[35m
+	SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'ユーザー１' LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK TO SAVEPOINT active_record_1[0m
+Redirected to http://localhost
+Completed 302 Found in 15ms (ActiveRecord: 1.3ms)
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by UsersController#create as HTML
+  Parameters: 
+{
+    "user"[0;37m => [0m{
+                         "name"[0;37m => [0m[0;33m"ユーザー１"[0m,
+                     "password"[0;37m => [0m[0;33m"[FILTERED]"[0m,
+        "password_confirmation"[0;37m => [0m[0;33m"[FILTERED]"[0m
+    }
+}
+  [1m[35m (0.4ms)[0m  [1m[35m
+	SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'ユーザー１' LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK TO SAVEPOINT active_record_1[0m
+Redirected to http://localhost
+Completed 302 Found in 16ms (ActiveRecord: 1.3ms)
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.7ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'Jason' LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.5ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[36mUser Exists (0.7ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'Jason' LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'jason' LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'jason' LIMIT 1[0m
+  [1m[35m (0.5ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` IS NULL LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'jason' LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` IS NULL LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (1.1ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[36mUser Exists (0.7ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'jason' LIMIT 1[0m
+  [1m[35m (0.5ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` IS NULL LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.7ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'jason' LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'jason' LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` IS NULL LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` IS NULL LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[36mUser Exists (0.9ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'jason' LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` IS NULL LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.7ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` IS NULL LIMIT 1[0m
+  [1m[35m (0.6ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'jason' LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` IS NULL LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` IS NULL LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'jason' LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` IS NULL LIMIT 1[0m
+  [1m[35m (0.5ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` IS NULL LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'taro' LIMIT 1[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32m
+	INSERT
+	INTO
+		`users` (
+			`name`
+			,`password_digest`
+			,`created_at`
+			,`updated_at`
+		)
+	VALUES (
+		'taro'
+		,'$2a$04$nn7v47QmhmjHvGaU230DyOBQO/jP6kqwuIwGw.c0g9VpIY6L2n9Vu'
+		,'2018-12-13 14:55:50'
+		,'2018-12-13 14:55:50'
+	)[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	RELEASE SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34m
+	SELECT
+		1 AS one
+	FROM
+		`users`
+	WHERE
+		`users`.`name` = BINARY 'taro' LIMIT 1[0m
+  [1m[35m (3.7ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (3.8ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.5ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (2.1ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (1.0ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.5ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.5ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.7ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.6ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.6ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[36mBoard Load (0.6ms)[0m  [1m[34m
+	SELECT
+		`boards`. *
+	FROM
+		`boards`
+	WHERE
+		`boards`.`id` = 1 LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.5ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[36mBoard Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`boards`. *
+	FROM
+		`boards`
+	WHERE
+		`boards`.`id` = 1 LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[36mBoard Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`boards`. *
+	FROM
+		`boards`
+	WHERE
+		`boards`.`id` = 1 LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[36mBoard Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`boards`. *
+	FROM
+		`boards`
+	WHERE
+		`boards`.`id` = 1 LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	SAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32m
+	INSERT
+	INTO
+		`boards` (
+			`name`
+			,`title`
+			,`body`
+			,`created_at`
+			,`updated_at`
+		)
+	VALUES (
+		'ユーザーA'
+		,'タイトルA'
+		,'本文A'
+		,'2018-12-15 06:33:55'
+		,'2018-12-15 06:33:55'
+	)[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	RELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (3.1ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	SAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32m
+	INSERT
+	INTO
+		`boards` (
+			`name`
+			,`title`
+			,`body`
+			,`created_at`
+			,`updated_at`
+		)
+	VALUES (
+		'ユーザーA'
+		,'タイトルA'
+		,'本文A'
+		,'2018-12-15 06:34:58'
+		,'2018-12-15 06:34:58'
+	)[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	RELEASE SAVEPOINT active_record_1[0m
+  [1m[36mBoard Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`boards`. *
+	FROM
+		`boards`
+	WHERE
+		`boards`.`id` = 1 LIMIT 1[0m
+  [1m[35m (3.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.8ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	SAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32m
+	INSERT
+	INTO
+		`boards` (
+			`name`
+			,`title`
+			,`body`
+			,`created_at`
+			,`updated_at`
+		)
+	VALUES (
+		'ユーザーA'
+		,'タイトルA'
+		,'本文A'
+		,'2018-12-15 06:35:11'
+		,'2018-12-15 06:35:11'
+	)[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	RELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (3.5ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.7ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.2ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.8ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.5ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.6ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.5ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by BoardsController#new as HTML
+  Rendering boards/new.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered boards/new.html.erb within layouts/application (0.6ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 103ms (Views: 30.5ms | ActiveRecord: 1.8ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by BoardsController#index as HTML
+  Rendering boards/index.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered boards/index.html.erb within layouts/application (0.6ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 79ms (Views: 33.2ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by BoardsController#index as HTML
+  Rendering boards/index.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered boards/index.html.erb within layouts/application (0.6ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 3ms (Views: 2.2ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.5ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by BoardsController#new as HTML
+  Rendering boards/new.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered boards/new.html.erb within layouts/application (0.8ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 44ms (Views: 2.7ms | ActiveRecord: 2.3ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by BoardsController#index as HTML
+  Rendering boards/index.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered boards/index.html.erb within layouts/application (0.6ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 88ms (Views: 34.5ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by BoardsController#index as HTML
+  Rendering boards/index.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered boards/index.html.erb within layouts/application (0.7ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 3ms (Views: 2.4ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by BoardsController#index as HTML
+  Rendering boards/index.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered boards/index.html.erb within layouts/application (0.8ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 4ms (Views: 2.7ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by BoardsController#new as HTML
+  Rendering boards/new.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered boards/new.html.erb within layouts/application (0.8ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 37ms (Views: 3.5ms | ActiveRecord: 0.5ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by BoardsController#new as HTML
+  Rendering boards/new.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered boards/new.html.erb within layouts/application (0.7ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 3ms (Views: 2.6ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by BoardsController#index as HTML
+  Rendering boards/index.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered boards/index.html.erb within layouts/application (0.9ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 95ms (Views: 37.4ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by BoardsController#index as HTML
+  Rendering boards/index.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered boards/index.html.erb within layouts/application (0.8ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 3ms (Views: 3.0ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by BoardsController#new as HTML
+  Rendering boards/new.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered boards/new.html.erb within layouts/application (1.2ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 51ms (Views: 3.2ms | ActiveRecord: 1.6ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by BoardsController#new as HTML
+  Rendering boards/new.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered boards/new.html.erb within layouts/application (1.0ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 5ms (Views: 4.4ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by BoardsController#new as HTML
+  Rendering boards/new.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered boards/new.html.erb within layouts/application (0.7ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 4ms (Views: 3.1ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.8ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by BoardsController#index as HTML
+  Rendering boards/index.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered boards/index.html.erb within layouts/application (0.6ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 82ms (Views: 30.5ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by BoardsController#index as HTML
+  Rendering boards/index.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered boards/index.html.erb within layouts/application (0.6ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 3ms (Views: 2.3ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by BoardsController#new as HTML
+  Rendering boards/new.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered boards/new.html.erb within layouts/application (0.6ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 47ms (Views: 2.9ms | ActiveRecord: 1.8ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by BoardsController#new as HTML
+  Rendering boards/new.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered boards/new.html.erb within layouts/application (0.9ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 3ms (Views: 2.3ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by BoardsController#new as HTML
+  Rendering boards/new.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered boards/new.html.erb within layouts/application (0.7ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 3ms (Views: 2.7ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.5ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34m
+	SELECT
+		`schema_migrations`. *
+	FROM
+		`schema_migrations`[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by BoardsController#index as HTML
+  Rendering boards/index.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered boards/index.html.erb within layouts/application (1.0ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 103ms (Views: 39.2ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by BoardsController#index as HTML
+  Rendering boards/index.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered boards/index.html.erb within layouts/application (0.7ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 4ms (Views: 3.1ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.4ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by BoardsController#new as HTML
+  Rendering boards/new.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered boards/new.html.erb within layouts/application (0.7ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 46ms (Views: 2.7ms | ActiveRecord: 2.3ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by BoardsController#new as HTML
+  Rendering boards/new.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered boards/new.html.erb within layouts/application (0.6ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 3ms (Views: 2.4ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35m
+	BEGIN[0m
+Processing by BoardsController#new as HTML
+  Rendering boards/new.html.erb within layouts/application
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered boards/new.html.erb within layouts/application (0.7ms)
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+Completed 200 OK in 3ms (Views: 2.2ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  [1m[31m
+	ROLLBACK[0m
